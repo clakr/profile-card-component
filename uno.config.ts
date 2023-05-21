@@ -33,18 +33,35 @@ export default defineConfig({
       "storm-grey": "#6B7082",
       solitude: "#E8E9EC",
     },
+    breakpoints: {
+      desktop: "1024px",
+    },
   },
   shortcuts: {
     "container--stats":
-      "mt-24 flex justify-around py-24 border-t border-solitude",
+      "mt-24 flex justify-between py-24 px-46 border-t border-solitude desktop:mt-28 desktop:px-50",
     stat: "flex flex-col gap-y-9",
     stat__number: "font-700 text-size-18 leading-22.32 c-bunting",
     stat__category: "leading-12.4 tracking-1.5 c-storm-grey",
   },
   rules: [
     [
+      "bg-pattern",
+      {
+        "background-image":
+          "url(/bg-pattern-top.svg), url(/bg-pattern-bottom.svg)",
+        // "background-position": "top 215% left 115%, bottom 195% right 125%",
+      },
+    ],
+    [
       "shadow-card",
       { "box-shadow": "0 5rem 10rem -2rem rgba(8, 70, 94, 0.5)" },
+    ],
+    [
+      /^max-w-([\d.]+)$/,
+      ([, value]) => ({
+        "max-width": convertToRem(value),
+      }),
     ],
     [
       /^pl-([\d.]+)$/,
@@ -62,6 +79,12 @@ export default defineConfig({
       /^py-([\d.]+)$/,
       ([, value]) => ({
         "padding-block": convertToRem(value),
+      }),
+    ],
+    [
+      /^px-([\d.]+)$/,
+      ([, value]) => ({
+        "padding-inline": convertToRem(value),
       }),
     ],
     [
@@ -111,6 +134,18 @@ export default defineConfig({
       /^tracking-([\d.]+)$/,
       ([, value]) => ({
         "letter-spacing": convertToRem(value),
+      }),
+    ],
+    [
+      /^bg-x-([\d.-]+)\/([\d.-]+)$/,
+      ([, firstValue, secondValue]) => ({
+        "background-position-x": `${firstValue}%, ${secondValue}%`,
+      }),
+    ],
+    [
+      /^bg-y-([\d.-]+)\/([\d.-]+)$/,
+      ([, firstValue, secondValue]) => ({
+        "background-position-y": `${firstValue}%, ${secondValue}%`,
       }),
     ],
   ],
